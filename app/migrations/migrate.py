@@ -11,8 +11,6 @@ def migrate_database_tables() -> None:
 
     initial_directory = os.getcwd()
 
-    print(initial_directory)
-
     os.chdir("./app/migrations")
 
     alembic_cfg = Config("./alembic.ini")

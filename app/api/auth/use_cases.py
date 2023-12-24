@@ -114,7 +114,7 @@ class ChangePassword:
         async with self.async_session.begin() as session:
             user = await session.execute(
                 select(User).where(
-                    (User.user_id == user_id).__and__(User.deactivated_at is None)
+                    (User.user_id == user_id).__and__(User.deactivated_at == None)
                 )
             )
             user = user.scalars().first()

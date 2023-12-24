@@ -63,7 +63,7 @@ async def read(
     read_user: ReadUser = Depends(ReadUser),
 ) -> ReadUserResponse:
     try:
-        resp_data = await read_user.execute(user_id=token_user_id)
+        resp_data = await read_user.execute(user_id=user_id)
 
         return ReadUserResponse(
             status="success",

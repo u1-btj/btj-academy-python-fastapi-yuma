@@ -73,7 +73,6 @@ def setup_test_db(setup_db: Generator) -> Generator:
 @pytest.fixture
 async def session() -> AsyncGenerator:
     # https://github.com/sqlalchemy/sqlalchemy/issues/5811#issuecomment-756269881
-    print(settings.DB_DSN)
     async_engine = create_async_engine(f"{DSN}/test")
     async with async_engine.connect() as conn:
         await conn.begin()

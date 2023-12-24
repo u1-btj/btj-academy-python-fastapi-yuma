@@ -51,7 +51,7 @@ async def test_register(ac: AsyncClient, session: AsyncSession) -> None:
     assert users_count + 1 == len(users.scalars().all())
 
 @pytest.mark.anyio
-async def test_login_refresh_token(ac: AsyncClient, session: AsyncSession) -> None:
+async def test_login_refresh_token_change_password(ac: AsyncClient, session: AsyncSession) -> None:
     """Login and Refresh Token""" 
 
     await setup_data(session)
@@ -65,6 +65,7 @@ async def test_login_refresh_token(ac: AsyncClient, session: AsyncSession) -> No
             "password":PASSWORD
         }
     )
+    assert 200 == response.status_code
     
     REFRESH_TOKEN = response.json()["data"]["refresh_token"]
     response = await ac.get(
@@ -77,40 +78,16 @@ async def test_login_refresh_token(ac: AsyncClient, session: AsyncSession) -> No
     assert 200 == response.status_code
     assert response.json()["data"]["access_token"] is not None
 
+    ACCESS_TOKEN = response.json()["data"]["access_token"]
+    response = await ac.put(
+        "/api/v1/auth/change-password",
+        headers={
+            "Authorization": "Bearer " + ACCESS_TOKEN 
+        },
+        json={
+            "old_password":PASSWORD,
+            "new_password":PASSWORD+"!"
+        }
+    )
 
-# @pytest.mark.anyio
-# async def test_notes_update(ac: AsyncClient, session: AsyncSession) -> None:
-#     """Update a note"""
-#     from app.models import Notebook
-
-#     # setup
-#     await setup_data(session)
-#     notebook = [nb async for nb in Notebook.read_all(session, include_notes=True)][0]
-#     note = notebook.notes[0]
-#     assert "Note 1" == note.title
-#     assert "Content 1" == note.content
-
-#     # execute
-#     response = await ac.put(
-#         f"/api/notes/{note.id}",
-#         json={
-#             "title": "Test Note",
-#             "content": "Test Content",
-#             "notebook_id": note.notebook_id,
-#         },
-#     )
-
-#     print(response.content)
-#     assert 200 == response.status_code
-#     expected = {
-#         "id": note.id,
-#         "title": "Test Note",
-#         "content": "Test Content",
-#         "notebook_id": notebook.id,
-#         "notebook_title": notebook.title,
-#     }
-#     assert expected == response.json()
-
-#     await session.refresh(note)
-#     assert "Test Note" == note.title
-#     assert "Test Content" == note.content
+    assert 200 == response.status_code
