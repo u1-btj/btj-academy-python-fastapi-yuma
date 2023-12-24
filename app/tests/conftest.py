@@ -12,7 +12,8 @@ from main import app
 from models.base import Base
 from settings import settings
 
-DSN = settings.DB_DSN[:len(settings.DB_DSN)-1]
+SPLITS = settings.DB_DSN.split("/")
+DSN = "/".join(SPLITS[:len(SPLITS)-1])
 
 @pytest.fixture
 def anyio_backend() -> str:
@@ -32,7 +33,7 @@ def setup_db() -> Generator:
     # Terminate transaction
     conn.execute(text("commit"))
     try:
-        conn.execute(text("drop database test"))
+        conn.execute(text(f"drop database {settings.DB_NAME}"))
     except SQLAlchemyError:
         pass
     finally:
@@ -41,7 +42,7 @@ def setup_db() -> Generator:
     conn = engine.connect()
     # Terminate transaction
     conn.execute(text("commit"))
-    conn.execute(text("create database test"))
+    conn.execute(text(f"create database {settings.DB_NAME}"))
     conn.close()
 
     yield
@@ -50,7 +51,7 @@ def setup_db() -> Generator:
     # Terminate transaction
     conn.execute(text("commit"))
     try:
-        conn.execute(text("drop database test"))
+        conn.execute(text(f"drop database {settings.DB_NAME}"))
     except SQLAlchemyError:
         pass
     conn.close()
@@ -59,7 +60,7 @@ def setup_db() -> Generator:
 
 @pytest.fixture(scope="session", autouse=True)
 def setup_test_db(setup_db: Generator) -> Generator:
-    engine = create_engine(f"{DSN.replace('+asyncpg', '')}/test")
+    engine = create_engine(settings.DB_DSN.replace('+asyncpg', ''))
 
     with engine.begin():
         Base.metadata.drop_all(engine)
@@ -73,7 +74,7 @@ def setup_test_db(setup_db: Generator) -> Generator:
 @pytest.fixture
 async def session() -> AsyncGenerator:
     # https://github.com/sqlalchemy/sqlalchemy/issues/5811#issuecomment-756269881
-    async_engine = create_async_engine(f"{DSN}/test")
+    async_engine = create_async_engine(settings.DB_DSN)
     async with async_engine.connect() as conn:
         await conn.begin()
         await conn.begin_nested()
