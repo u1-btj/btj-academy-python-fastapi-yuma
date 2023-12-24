@@ -134,6 +134,9 @@ class DeactivateUser:
                 )
             )
             user = user.scalars().first()
+            
+            if not user:
+                raise HTTPException(status_code=404)
 
             user.deactivated_at = datetime.datetime.utcnow()
             user.deactivated_by = user_id
