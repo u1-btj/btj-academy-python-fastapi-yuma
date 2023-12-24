@@ -42,9 +42,9 @@ INFO  [alembic.runtime.migration] Running upgrade a8483365f505 -> 24104b6e1e0c, 
 ```shell
 (venv) $ APP_CONFIG_FILE=local python3 src/main.py api
 INFO:     Will watch for changes in these directories: ['...']
-INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [49448] using WatchFiles
-INFO:     Started server process [49450]
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [92173] using WatchFiles
+INFO:     Started server process [92181]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 ```
