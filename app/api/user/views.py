@@ -112,18 +112,18 @@ async def update(
             status="error",
             message=ex.detail,
         )
-    # except Exception as e:
-    #     response.status_code = 500
-    #     message="failed to update user"
-    #     if hasattr(e, 'message'):
-    #         message = e.message
-    #     elif hasattr(e, 'detail'):
-    #         message = e.detail
+    except Exception as e:
+        response.status_code = 500
+        message="failed to update user"
+        if hasattr(e, 'message'):
+            message = e.message
+        elif hasattr(e, 'detail'):
+            message = e.detail
 
-    #     return UpdateUserResponse(
-    #         status="error",
-    #         message=message,
-    #     )
+        return UpdateUserResponse(
+            status="error",
+            message=message,
+        )
 
 
 @router.put("/deactivate", response_model=BaseResponse, tags=[tag])
