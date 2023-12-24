@@ -4,11 +4,13 @@ This is a sample project of Async Web API with FastAPI + SQLAlchemy 2.0 + Alembi
 It includes asynchronous DB access using asyncpg and test code.
 
 See [reference](https://github.com/rhoboro/async-fastapi-sqlalchemy/tree/main).
-[FastAPI Docs](https://fastapi.tiangolo.com/)
-[Uvicorn](https://www.uvicorn.org/)
-[SQL Alchemy](https://docs.sqlalchemy.org/en/20/orm/index.html)
-[SQL Alchemy - PostgreSQL](https://docs.sqlalchemy.org/en/20/dialects/postgresql.html)
-[Alembic](https://alembic.sqlalchemy.org/en/latest/tutorial.html)
+
+Other References
+- [FastAPI Docs](https://fastapi.tiangolo.com/)
+- [Uvicorn](https://www.uvicorn.org/)
+- [SQL Alchemy](https://docs.sqlalchemy.org/en/20/orm/index.html)
+- [SQL Alchemy - PostgreSQL](https://docs.sqlalchemy.org/en/20/dialects/postgresql.html)
+- [Alembic](https://alembic.sqlalchemy.org/en/latest/tutorial.html)
 
 # Setup
 
