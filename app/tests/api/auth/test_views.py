@@ -22,10 +22,11 @@ async def setup_data(session: AsyncSession) -> None:
     await session.commit()
 
 @pytest.mark.anyio
-async def test_register(ac: AsyncClient, session: AsyncSession) -> None:
-    """Register"""
+async def test_auth_viewsr(ac: AsyncClient, session: AsyncSession) -> None:
     # setup
     await setup_data(session)
+
+    """Register"""
     users = await session.execute(select(User))
     users_count = len(users.scalars().all())
 
@@ -50,14 +51,7 @@ async def test_register(ac: AsyncClient, session: AsyncSession) -> None:
 
     assert users_count + 1 == len(users.scalars().all())
 
-@pytest.mark.anyio
-async def test_login_refresh_token_change_password(ac: AsyncClient, session: AsyncSession) -> None:
-    """Login and Refresh Token""" 
-
-    await setup_data(session)
-    import time
-    time.sleep(2)
-    # execute
+    """Login"""
     response = await ac.post(
         "/api/v1/auth/login",
         json={
@@ -67,6 +61,7 @@ async def test_login_refresh_token_change_password(ac: AsyncClient, session: Asy
     )
     assert 200 == response.status_code
     
+    """Refresh Token"""
     REFRESH_TOKEN = response.json()["data"]["refresh_token"]
     response = await ac.get(
         "/api/v1/auth/refresh-token",
@@ -78,6 +73,7 @@ async def test_login_refresh_token_change_password(ac: AsyncClient, session: Asy
     assert 200 == response.status_code
     assert response.json()["data"]["access_token"] is not None
 
+    """Change Password"""
     ACCESS_TOKEN = response.json()["data"]["access_token"]
     response = await ac.put(
         "/api/v1/auth/change-password",
@@ -91,3 +87,4 @@ async def test_login_refresh_token_change_password(ac: AsyncClient, session: Asy
     )
 
     assert 200 == response.status_code
+    
