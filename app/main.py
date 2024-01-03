@@ -10,7 +10,7 @@ from migrations.migrate import migrate_database_tables
 from settings import settings
 
 # move app object outside of __main__ so auto reload can be set
-app = FastAPI(title="mjolnir v2")
+app = FastAPI(title="BTJ Academy")
 app.include_router(api_router, prefix="/api/v1")
 
 if __name__ == "__main__":
