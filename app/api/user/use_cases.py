@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 from db import get_session
 from api.base.base_schemas import PaginationMetaResponse, PaginationParams
 from models.user import User, UserSchema
-from .schema import (
+from .schemas import (
     UpdateUserRequest,
 )
 

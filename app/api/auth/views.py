@@ -5,7 +5,7 @@ from middlewares.authentication import (
     get_user_id_from_access_token,
 )
 
-from .schema import (
+from .schemas import (
     RegisterRequest,
     RegisterResponse,
     LoginResponse,
