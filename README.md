@@ -19,7 +19,7 @@ Other References
 ```shell
 $ python3 -m venv venv
 $ . venv/bin/activate
-(venv) $ pip3 install -r requirements.lock
+(venv) $ pip3 install -r requirements.txt
 ```
 
 ## Setup a database and create tables

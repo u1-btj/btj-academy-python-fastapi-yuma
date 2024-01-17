@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
-from .base import Base
+from models.base import Base
 
 
 class User(Base):
