@@ -21,12 +21,15 @@ tag = "Authentication"
 
 
 @router.post("/register", response_model=RegisterResponse, tags=[tag])
-async def create(
+async def register(
     request: Request,
     response: Response,
     data: RegisterRequest,
     register: Register = Depends(Register),
 ) -> RegisterResponse:
+    """
+    This endpoint is for register user
+    """
     try:
         resp_data = await register.execute(
             request=data,

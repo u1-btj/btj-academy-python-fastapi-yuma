@@ -18,3 +18,5 @@ pytest-cov
 pytest-env
 pytest-mock
 pytest-randomly
+PyJWT==2.6.0
+types-jwt==0.1.3
