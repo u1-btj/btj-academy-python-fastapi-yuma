@@ -1,3 +1,8 @@
+## Post Test Python Framework (Flask & FastAPI) - To Do :
+1. Create Notes Migration :white_check_mark:
+2. Create Model & CRUD Endpoint For Notes :white_check_mark:
+3. [API Documentation](https://github.com/u1-btj/btj-academy-python-fastapi-yuma?tab=readme-ov-file#api-documentation) :white_check_mark:
+
 # FastAPI + SQLAlchemy + Alembic Boilerplate
 
 This is a sample project of Async Web API with FastAPI + SQLAlchemy 2.0 + Alembic.
@@ -70,3 +75,13 @@ You can now access [localhost:8000/docs](http://localhost:8000/docs) to see the 
 (venv) $ cd app/migrations
 (venv) alembic revision -m "<name_of_migration_file>"
 ```
+
+# API Documentation
+For full and detailed API Documentation, check on this [Postman Documentation](https://documenter.getpostman.com/view/31773270/2s9YymJ5Lo)  
+
+List of Endpoint for Notes `/api/v1/notes` :
+- POST `/api/v1/notes` -> Create new note, contain title and content on request body. Value for created_by will be set into user_id from JWT Token
+- PUT `/api/v1/notes/[id]` -> Update note based on note id, contain title and content on request body. Only user who created the note can update it.
+- DELETE `/api/v1/notes/[id]` -> Delete note based on note id. Only user who created the note can delete it.
+- GET `/api/v1/notes/[id]` -> Get specific note id. Only user who created the note can retrieved it.
+- GET `/api/v1/notes` -> Get all notes with pagination, contain params : item_per_page, page, filter_by_user_id, included_deleted_note. If filter_by_user_id = True, it will only get all notes from specific user based on user_id from JWT Token, otherwise it will get all notes from all user (Default Value = True). If included_deleted_note = True, responses will also contain deleted note, otherwise deleted note will be excluded (Default Value = False).
