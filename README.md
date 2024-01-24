@@ -78,6 +78,7 @@ You can now access [localhost:8000/docs](http://localhost:8000/docs) to see the 
 
 # API Documentation
 For full and detailed API Documentation, check on this [Postman Documentation](https://documenter.getpostman.com/view/31773270/2s9YymJ5Lo)  
+Or you can access via [localhost:8000/docs](http://localhost:8000/docs)  
 
 List of Endpoint for Notes `/api/v1/notes` :
 - POST `/api/v1/notes` -> Create new note, contain title and content on request body. Value for created_by will be set into user_id from JWT Token
